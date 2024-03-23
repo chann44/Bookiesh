@@ -28,8 +28,11 @@ export class AuthService {
       const passwordMatched = await comparePassword(user.hash, password);
 
       if (!passwordMatched) throw new ForbiddenException(INCORRECT_CREDENTIALS);
+      const access_token = await this.signToken(user.id, email);
 
-      return this.signToken(user.id, email);
+      return {
+        access_token,
+      };
     } catch (error) {
       throw error;
     }
