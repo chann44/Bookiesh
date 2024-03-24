@@ -1,11 +1,12 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
-import { DbService } from 'src/db/db.service';
-import { CreateUserDto } from './dtos';
-import { comparePassword, hashPassword } from 'src/lib/password';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
-import { INCORRECT_CREDENTIALS } from 'src/lib/exception';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+
+import { DbService } from '../db/db.service';
+import { CreateUserDto } from './dtos';
+import { comparePassword, hashPassword } from '../lib/password';
+import { INCORRECT_CREDENTIALS } from '../lib/exception';
 
 @Injectable()
 export class AuthService {
