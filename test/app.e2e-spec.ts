@@ -134,15 +134,29 @@ describe('App e2e', () => {
           .spec()
           .post(`/auth/login`)
           .withBody(dto)
-          .expectStatus(201);
+          .expectStatus(201)
+          .stores('userAc', 'access_token');
       });
     });
   });
 
-  //   describe('User', () => {
-  //     describe('get current user', () => {});
-  //     describe('edit user', () => {});
-  //   });
+  describe('User', () => {
+    describe('get current user', () => {
+      it('should throw unthonticated', () => {
+        return pactum.spec().get('/users').expectStatus(401).inspect();
+      });
+      it('should get current user', () => {
+        return pactum
+          .spec()
+          .get('/users')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAc}',
+          })
+          .expectStatus(200)
+          .inspect();
+      });
+    });
+  });
 
   //   describe('Bookmark', () => {
   //     it.todo('hello');
